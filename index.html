@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Display</title>
+    <title>Image Gallery</title>
     <style>
         * {
             margin: 0;
@@ -12,23 +12,20 @@
         }
         
         body {
-            background-color: #181818;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #222222;
             min-height: 100vh;
-            position: relative;
+            padding: 20px;
         }
         
         .back-button {
-            position: absolute;
-            top: 70px;
-            left: 100px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
             background: transparent;
             border: 2px solid #FFC001;
             color: #FFC001;
             padding: 10px 15px;
-            border-radius: 25px; /* More rounded corners */
+            border-radius: 25px;
             cursor: pointer;
             font-family: Arial, sans-serif;
             font-size: 16px;
@@ -37,6 +34,16 @@
             gap: 8px;
             transition: all 0.3s ease;
             text-decoration: none;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+        
+        .back-button.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
         }
         
         .back-button:hover {
@@ -44,38 +51,36 @@
             color: #000;
         }
         
-        img {
-            max-width: 100%;
-            max-height: 100vh;
-            width: auto;
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            align-items: center;
+        }
+        
+        .gallery img {
+            width: 100%;
+            max-width: 600px;
             height: auto;
-            display: block;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .back-button {
-                top: 15px;
-                left: 15px;
-                padding: 8px 12px;
-                font-size: 14px;
-                border-radius: 20px;
-            }
+        .gallery img:hover {
+            transform: scale(1.02);
         }
         
-        @media (max-width: 480px) {
-            .back-button {
-                top: 70px;
-                left: 20px;
-                padding: 6px 10px;
-                font-size: 13px;
-                border-radius: 18px;
-            }
+        /* Add some content height to enable scrolling */
+        .gallery {
+            padding-bottom: 50px;
         }
     </style>
 </head>
 <body>
-    <!-- Back button -->
+    <!-- Back button - hidden by default -->
     <button class="back-button" onclick="goBack()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M15 18l-6-6 6-6"/>
@@ -83,13 +88,34 @@
         Back
     </button>
     
-    <!-- Replace "your-image.jpg" with your actual image file name -->
-    <img src="menu1/BEVERAGES.jpg" alt="">
+    <!-- Image Gallery - Single Column -->
+    <div class="gallery">
+        <!-- Replace these with your actual image files -->
+        <img src="menu1/11.jpg" alt="Image 1">
+        <img src="menu1/22.png" alt="Image 2">
+        <img src="menu1/33.png" alt="Image 3">
+        <img src="menu1/44.png" alt="Image 4">
+        <img src="menu1/55.png" alt="Image 5">
+        <img src="menu1/66.png" alt="Image 6">
+        <img src="menu1/77.png" alt="Image 7">
+        <img src="menu1/88.png" alt="Image 8">
+        <img src="menu1/99.png" alt="Image 9">
+    </div>
 
     <script>
         function goBack() {
             window.history.back();
         }
+        
+        // Show back button when scrolling down
+        window.addEventListener('scroll', function() {
+            const backButton = document.querySelector('.back-button');
+            if (window.scrollY >= 0) { // Show after scrolling 0px
+                backButton.classList.add('visible');
+             } else {
+                backButton.classList.add('visible');
+            }
+        });
     </script>
 </body>
 </html>
